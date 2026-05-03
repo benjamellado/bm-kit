@@ -38,7 +38,7 @@ if [[ "$TOOL" != "claude" ]]; then
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROJECT_DIR="$(pwd)"
 ISSUES_DIR="$PROJECT_DIR/.scratch/$FEATURE_NAME/issues"
 FEATURE_PROGRESS="$PROJECT_DIR/.scratch/$FEATURE_NAME/progress.txt"
 GLOBAL_PROGRESS="$PROJECT_DIR/progress.txt"
