@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "bm-kit",
   "version": "1.0.0",
   "description": "AI-assisted dev workflow plugin — grill, plan, triage, and implement with a unified local toolkit",

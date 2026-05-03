@@ -1,21 +1,22 @@
 {
-  "name": "ralph-marketplace",
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "bm-kit",
+  "description": "AI-assisted dev workflow skills — grill, plan, triage, and implement with a unified local toolkit",
+  "version": "1.0.0",
   "owner": {
-    "name": "snarktank"
-  },
-  "metadata": {
-    "description": "Skills for the Ralph autonomous agent system - Generate PRDs and convert them to prd.json format for autonomous execution",
-    "version": "1.0.0"
+    "name": "benjamellado"
   },
   "plugins": [
     {
-      "name": "ralph-skills",
+      "name": "bm-kit",
       "source": "./",
-      "description": "PRD generation and conversion skills for the Ralph autonomous agent loop",
+      "description": "AI-assisted dev workflow skills — grill, plan, triage, and implement with a unified local toolkit",
       "version": "1.0.0",
-      "keywords": ["ralph", "prd", "automation", "agent", "planning"],
+      "author": {
+        "name": "benjamellado"
+      },
       "category": "productivity",
-      "skills": "./skills/"
+      "keywords": ["bm-kit", "ralph", "workflow", "automation", "agent", "planning"]
     }
   ]
 }
