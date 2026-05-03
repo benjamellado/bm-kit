@@ -5,6 +5,47 @@ description: Interview the user relentlessly about a plan or design until reachi
 
 Read `${CLAUDE_PLUGIN_ROOT}/context/workflow.md` for workflow context.
 
+## Session opening
+
+Before asking the first question, check for open Backlog items:
+
+1. Check if `.scratch/backlog/` exists in the current project.
+2. If it does, read all `*.md` files there, parse the frontmatter of each, and collect items where `status: open`. Ignore items with `status: picked-up` or `status: done`.
+3. If open items exist, open the session with:
+
+   > What do you want to work on? (You have N open Backlog items: [titles] — want to pick one up, or start something new?)
+
+4. If no open items exist (or `.scratch/backlog/` is absent), open with the standard question:
+
+   > What do you want to work on?
+
+---
+
+## If the user picks a Backlog item
+
+When the user names a Backlog item (by title, ID, or number):
+
+1. Read the full file body of that item from `.scratch/backlog/`.
+2. Use the item's body as the starting context for the grilling session — treat it as the plan to interrogate. Skip the usual open-ended opening questions.
+3. Dive straight into grilling based on the item's content.
+
+---
+
+## During the session — once a feature slug is established
+
+As soon as the session produces a concrete feature slug (a short kebab-case identifier for the work being grilled), update the chosen Backlog item:
+
+1. Open the Backlog item file.
+2. In the frontmatter, set `status: picked-up`.
+3. Add a `feature: .scratch/<feature-slug>/` field.
+4. Use the Edit tool to write the change.
+
+Only do this if the user picked a Backlog item in the opening. If they started fresh, skip this step.
+
+---
+
+## Grilling
+
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
 
 Ask the questions one at a time.
