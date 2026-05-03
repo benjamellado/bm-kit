@@ -1,5 +1,5 @@
 #!/bin/bash
-# ralph.sh <feature-name> [--tool claude]
+# ralph.sh <feature-name> [--tool claude] [--max N]
 # Runs one agent iteration per ready-for-agent issue in .scratch/<feature>/issues/
 
 set -e
@@ -18,6 +18,14 @@ while [[ $# -gt 0 ]]; do
       TOOL="${1#*=}"
       shift
       ;;
+    --max)
+      MAX_ITERATIONS="$2"
+      shift 2
+      ;;
+    --max=*)
+      MAX_ITERATIONS="${1#*=}"
+      shift
+      ;;
     *)
       if [[ -z "$FEATURE_NAME" ]]; then
         FEATURE_NAME="$1"
@@ -28,7 +36,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z "$FEATURE_NAME" ]]; then
-  echo "Usage: ./ralph.sh <feature-name> [--tool claude]"
+  echo "Usage: ./ralph.sh <feature-name> [--tool claude] [--max N]"
   exit 1
 fi
 
