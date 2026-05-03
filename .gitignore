@@ -3,6 +3,9 @@ prd.json
 progress.txt
 .last-branch
 
+# Scratch working files (local only)
+.scratch/
+
 # Archive is optional to commit
 # archive/
 
