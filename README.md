@@ -34,8 +34,11 @@ That's the rhythm: think carefully, decide explicitly, delegate confidently, com
 
 ## Install
 
-```bash
-claude plugin install github.com/benjamellado/bm-kit --scope user
+In Claude Code:
+
+```
+/plugin marketplace add benjamellado/bm-kit
+/plugin install bm-kit@bm-kit
 ```
 
 ## Per-project setup
