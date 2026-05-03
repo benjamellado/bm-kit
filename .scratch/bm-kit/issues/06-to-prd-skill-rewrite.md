@@ -1,7 +1,7 @@
 ---
 id: BM-06
 title: to-prd skill rewrite
-status: ready-for-agent
+status: done
 category: enhancement
 priority: 6
 ---

@@ -1,74 +1,69 @@
 ---
 name: to-prd
-description: Turn the current conversation context into a PRD and publish it to the project issue tracker. Use when user wants to create a PRD from the current context.
+description: Turn the current conversation context into a PRD and save it to .scratch/<feature-slug>/PRD.md. Use when user wants to create a PRD from the current context.
+allowed-tools: Bash, Read, Write
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
+Read `${CLAUDE_PLUGIN_ROOT}/context/workflow.md` to understand the full bm-kit pipeline and where this skill fits.
 
-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+This skill synthesises the current conversation into a structured PRD and saves it locally. Do NOT interview the user — synthesize what you already know from the conversation.
 
 ## Process
 
-1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the PRD, and respect any ADRs in the area you're touching.
+1. **Determine the feature slug.**
+   - Infer it from the conversation topic (e.g. "user auth flow" → `user-auth-flow`).
+   - If unclear, ask: "What slug should I use for this feature? (e.g. `user-auth-flow`)"
+   - The slug becomes the directory name under `.scratch/`.
 
-2. Sketch out the major modules you will need to build or modify to complete the implementation. Actively look for opportunities to extract deep modules that can be tested in isolation.
+2. **Explore the repo** to understand the current codebase state. Use the project's domain glossary (from `CONTEXT.md` if present) and respect any ADRs in `docs/adr/`.
 
-A deep module (as opposed to a shallow module) is one which encapsulates a lot of functionality in a simple, testable interface which rarely changes.
+3. **Write the PRD** to `.scratch/<feature-slug>/PRD.md` using the template below. Include `status: needs-triage` in the frontmatter.
+   - Create the directory if it doesn't exist (`mkdir -p .scratch/<feature-slug>`).
+   - No GitHub API calls — write the file directly with the Write tool.
 
-Check with the user that these modules match their expectations. Check with the user which modules they want tests written for.
+4. **End with:**
+   > PRD saved to `.scratch/<feature-slug>/PRD.md`. Run `/bm-kit:to-issues` to break it into issues.
 
-3. Write the PRD using the template below, then publish it to the project issue tracker. Apply the `needs-triage` triage label so it enters the normal triage flow.
+---
 
-<prd-template>
+## PRD template
+
+```markdown
+---
+status: needs-triage
+type: prd
+---
+
+# <Feature Name>
 
 ## Problem Statement
 
-The problem that the user is facing, from the user's perspective.
+<The problem the user is facing, from the user's perspective.>
 
 ## Solution
 
-The solution to the problem, from the user's perspective.
+<The solution, from the user's perspective.>
 
 ## User Stories
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
+<A numbered list of user stories. Each in the format: "As a <actor>, I want <feature>, so that <benefit>." Be extensive — cover all aspects of the feature.>
 
-1. As an <actor>, I want a <feature>, so that <benefit>
-
-<user-story-example>
-1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
-</user-story-example>
-
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+1. As a ..., I want ..., so that ...
+2. ...
 
 ## Implementation Decisions
 
-A list of implementation decisions that were made. This can include:
-
-- The modules that will be built/modified
-- The interfaces of those modules that will be modified
-- Technical clarifications from the developer
-- Architectural decisions
-- Schema changes
-- API contracts
-- Specific interactions
-
-Do NOT include specific file paths or code snippets. They may end up being outdated very quickly.
+<Implementation decisions made. Include: modules to build/modify, architectural decisions, schema changes, API contracts, specific interactions. Do NOT include specific file paths or code snippets.>
 
 ## Testing Decisions
 
-A list of testing decisions that were made. Include:
-
-- A description of what makes a good test (only test external behavior, not implementation details)
-- Which modules will be tested
-- Prior art for the tests (i.e. similar types of tests in the codebase)
+<Testing decisions. Include: what makes a good test for this feature, which modules will be tested, prior art in the codebase.>
 
 ## Out of Scope
 
-A description of the things that are out of scope for this PRD.
+<Things explicitly not included in this PRD.>
 
 ## Further Notes
 
-Any further notes about the feature.
-
-</prd-template>
+<Any additional context.>
+```
