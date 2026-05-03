@@ -75,3 +75,46 @@ The skill infers which structure applies:
 - If neither exists, create a root `CONTEXT.md` lazily when the first term is resolved
 
 When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.
+
+## Canonical sections
+
+A `CONTEXT.md` may contain any of the following sections. Skills should write/update only the sections they own.
+
+| Section | What belongs there |
+|---|---|
+| `Purpose` | One or two sentences: what this codebase does and why it exists |
+| `Stack` | Languages, frameworks, databases, infra — the tech stack in use |
+| `Run` | How to start the dev server / run the app locally |
+| `Test` | How to run the test suite |
+| `Architecture` | High-level shape: layers, modules, key data flows |
+| `Structure` | Directory layout and what lives where |
+| `Integrations` | External services, APIs, or systems this codebase connects to |
+| `Workflow` | Dev workflow: branch strategy, PR process, deploy pipeline |
+| `Gotchas` | Non-obvious constraints, footguns, and tribal knowledge |
+
+`Language` is **not** in the table above — it is owned exclusively by `grill-with-docs` and must never be written or overwritten by the `understand` skill.
+
+## Tag convention
+
+Two tags may appear on the line **immediately following a section heading** (not inside the section body):
+
+```md
+## Stack
+<!-- auto -->
+- Node 20, Next.js 14, PostgreSQL
+```
+
+| Tag | Meaning | How skills should treat it |
+|---|---|---|
+| `<!-- auto -->` | Section was extracted automatically by `understand`; may be stale | `understand` may overwrite freely; `grill-with-docs` should flag discrepancies for human review |
+| `<!-- reviewed -->` | Content was confirmed by a human in a `grill-with-docs` session | Neither skill should overwrite without explicit instruction; surface discrepancies and ask |
+
+If a section has no tag, treat it as unclassified — preserve content but note it was not auto-extracted.
+
+## Extraction classes
+
+| Class | Sections | Notes |
+|---|---|---|
+| **Auto** — fully machine-extractable from the repo | `Stack`, `Run`, `Test`, `Structure` | `understand` writes these; mark with `<!-- auto -->` |
+| **Partial** — requires inference or human context | `Purpose`, `Architecture`, `Integrations`, `Workflow` | `understand` drafts a best-effort version; mark with `<!-- auto -->`; encourage human review |
+| **Conversation-only** — cannot be extracted from code | `Gotchas` | `understand` never writes this section; only `grill-with-docs` populates it through dialogue |
