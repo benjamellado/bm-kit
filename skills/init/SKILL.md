@@ -17,13 +17,41 @@ For `CONTEXT.md`, create this stub if the file doesn't exist:
 ```markdown
 # Context
 
-## Domain Glossary
+## Purpose
 
-<!-- Add domain terms and their definitions here -->
+<!-- What does this project do and why does it exist? -->
+
+## Stack
+
+<!-- Languages, frameworks, major libraries, and their versions -->
+
+## Run
+
+<!-- How to run the project locally -->
+
+## Test
+
+<!-- How to run the test suite -->
 
 ## Architecture
 
-<!-- Add high-level architecture notes here -->
+<!-- High-level architecture: components, data flow, key boundaries -->
+
+## Structure
+
+<!-- Directory layout and where to find things -->
+
+## Integrations
+
+<!-- External services, APIs, and third-party dependencies -->
+
+## Workflow
+
+<!-- Development workflow, branching strategy, deploy process -->
+
+## Gotchas
+
+<!-- Non-obvious constraints, known issues, and things that will trip you up -->
 ```
 
 For `progress.txt`, create this stub if the file doesn't exist:
@@ -39,4 +67,4 @@ After creating all files, report what was created vs what already existed.
 
 End with:
 
-> Project initialised. Run `/bm-kit:grill-me` to start your first feature.
+> Project initialised. Run `/bm-kit:understand` to pre-fill CONTEXT.md with a first-pass understanding of this codebase. Then run `/bm-kit:grill-me` to start your first feature.
