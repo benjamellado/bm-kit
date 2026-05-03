@@ -3,6 +3,8 @@ name: diagnose
 description: Disciplined diagnosis loop for hard bugs and performance regressions. Reproduce → minimise → hypothesise → instrument → fix → regression-test. Use when user says "diagnose this" / "debug this", reports a bug, says something is broken/throwing/failing, or describes a performance regression.
 ---
 
+Read `${CLAUDE_PLUGIN_ROOT}/context/workflow.md` for workflow context.
+
 # Diagnose
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
@@ -115,3 +117,7 @@ Required before declaring done:
 - [ ] The hypothesis that turned out correct is stated in the commit / PR message — so the next debugger learns
 
 **Then ask: what would have prevented this bug?** If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the `/improve-codebase-architecture` skill with the specifics. Make the recommendation **after** the fix is in, not before — you have more information now than when you started.
+
+---
+
+Root cause found? Run `/bm-kit:tdd` to write a regression test.

@@ -1,7 +1,7 @@
 ---
 id: BM-09
 title: Planning & utility skills polish
-status: ready-for-agent
+status: done
 category: enhancement
 priority: 9
 ---

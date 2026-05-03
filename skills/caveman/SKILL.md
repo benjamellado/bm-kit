@@ -7,6 +7,8 @@ description: >
   "less tokens", "be brief", or invokes /caveman.
 ---
 
+Read `${CLAUDE_PLUGIN_ROOT}/context/workflow.md` for workflow context.
+
 Respond terse like smart caveman. All technical substance stay. Only fluff die.
 
 ## Persistence

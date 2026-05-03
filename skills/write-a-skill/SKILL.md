@@ -3,6 +3,8 @@ name: write-a-skill
 description: Create new agent skills with proper structure, progressive disclosure, and bundled resources. Use when user wants to create, write, or build a new skill.
 ---
 
+Read `${CLAUDE_PLUGIN_ROOT}/context/workflow.md` for workflow context.
+
 # Writing Skills
 
 ## Process
@@ -115,3 +117,7 @@ After drafting, verify:
 - [ ] Consistent terminology
 - [ ] Concrete examples included
 - [ ] References one level deep
+
+---
+
+Skill written? Run `/bm-kit:init` in a test project to verify it loads.
