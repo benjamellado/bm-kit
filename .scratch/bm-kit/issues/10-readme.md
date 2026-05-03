@@ -1,7 +1,7 @@
 ---
 id: BM-10
 title: README
-status: ready-for-agent
+status: done
 category: enhancement
 priority: 10
 ---
