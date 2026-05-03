@@ -4,22 +4,30 @@ You are an autonomous coding agent working on a software project.
 
 ## Your Task
 
-1. Read the PRD at `prd.json` (in the same directory as this file)
-2. Read the progress log at `progress.txt` (check Codebase Patterns section first)
-3. Check you're on the correct branch from PRD `branchName`. If not, check it out or create from main.
-4. Pick the **highest priority** user story where `passes: false`
-5. Implement that single user story
-6. Run quality checks (e.g., typecheck, lint, test - use whatever your project requires)
-7. Update CLAUDE.md files if you discover reusable patterns (see below)
-8. If checks pass, commit ALL changes with message: `feat: [Story ID] - [Story Title]`
-9. Update the PRD to set `passes: true` for the completed story
-10. Append your progress to `progress.txt`
+The ralph script passes context at the top of your prompt:
+- **Feature name** — the feature you're working on
+- **Issue file** — the specific `.scratch/<feature>/issues/NN-slug.md` to implement
+- **Issues directory** — where all issues for this feature live
+- **Feature progress log** — `.scratch/<feature>/progress.txt`
+- **Global progress log** — `progress.txt` at the project root
+
+Steps:
+1. Read the **issue file** provided above
+2. Read the **feature progress log** (check Codebase Patterns section first)
+3. Read the **global progress log** (check Codebase Patterns section first)
+4. Implement the issue
+5. Run quality checks (e.g., typecheck, lint, test — use whatever the project requires)
+6. Update CLAUDE.md files if you discover reusable patterns (see below)
+7. If checks pass, commit ALL changes with message: `feat: [Issue ID] - [Issue Title]`
+8. Update the **issue file**: set `status: done` in the frontmatter
+9. Append your progress to the **feature progress log**
+10. Append cross-cutting codebase patterns to the **global progress log**
 
 ## Progress Report Format
 
-APPEND to progress.txt (never replace, always append):
+APPEND to the feature progress log (never replace, always append):
 ```
-## [Date/Time] - [Story ID]
+## [Date/Time] - [Issue ID]
 - What was implemented
 - Files changed
 - **Learnings for future iterations:**
@@ -29,11 +37,11 @@ APPEND to progress.txt (never replace, always append):
 ---
 ```
 
-The learnings section is critical - it helps future iterations avoid repeating mistakes and understand the codebase better.
+The learnings section is critical — it helps future iterations avoid repeating mistakes and understand the codebase better.
 
 ## Consolidate Patterns
 
-If you discover a **reusable pattern** that future iterations should know, add it to the `## Codebase Patterns` section at the TOP of progress.txt (create it if it doesn't exist). This section should consolidate the most important learnings:
+If you discover a **reusable pattern** that future iterations should know, add it to the `## Codebase Patterns` section at the TOP of the **global** `progress.txt` (create it if it doesn't exist):
 
 ```
 ## Codebase Patterns
@@ -48,9 +56,9 @@ Only add patterns that are **general and reusable**, not story-specific details.
 
 Before committing, check if any edited files have learnings worth preserving in nearby CLAUDE.md files:
 
-1. **Identify directories with edited files** - Look at which directories you modified
-2. **Check for existing CLAUDE.md** - Look for CLAUDE.md in those directories or parent directories
-3. **Add valuable learnings** - If you discovered something future developers/agents should know:
+1. **Identify directories with edited files** — look at which directories you modified
+2. **Check for existing CLAUDE.md** — look for CLAUDE.md in those directories or parent directories
+3. **Add valuable learnings** — if you discovered something future developers/agents should know:
    - API patterns or conventions specific to that module
    - Gotchas or non-obvious requirements
    - Dependencies between files
@@ -72,7 +80,7 @@ Only update CLAUDE.md if you have **genuinely reusable knowledge** that would he
 
 ## Quality Requirements
 
-- ALL commits must pass your project's quality checks (typecheck, lint, test)
+- ALL commits must pass the project's quality checks (typecheck, lint, test)
 - Do NOT commit broken code
 - Keep changes focused and minimal
 - Follow existing code patterns
@@ -89,16 +97,30 @@ If no browser tools are available, note in your progress report that manual brow
 
 ## Stop Condition
 
-After completing a user story, check if ALL stories have `passes: true`.
+After completing the issue, check if ALL issues in the **issues directory** have `status: done`.
 
-If ALL stories are complete and passing, reply with:
+If ALL issues are complete and done, reply with:
 <promise>COMPLETE</promise>
 
-If there are still stories with `passes: false`, end your response normally (another iteration will pick up the next story).
+If there are still issues with `status: ready-for-agent`, end your response normally (the next ralph iteration will pick up the next issue).
 
 ## Important
 
-- Work on ONE story per iteration
-- Commit frequently
+- Work on ONE issue per iteration (the one provided in the context above)
+- Commit after completing the issue
 - Keep CI green
-- Read the Codebase Patterns section in progress.txt before starting
+- Read the Codebase Patterns sections in both progress logs before starting
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as local markdown files under `.scratch/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`, `done`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo — one `CONTEXT.md` + `docs/adr/` at the root. See `docs/agents/domain.md`.
