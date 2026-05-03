@@ -92,7 +92,14 @@ $(cat "$SCRIPT_DIR/../CLAUDE.md")
 EOF
   )
 
-  OUTPUT=$(echo "$PROMPT" | claude --dangerously-skip-permissions --print 2>&1 | tee /dev/stderr) || true
+  CLAUDE_EXIT=0
+  OUTPUT=$(set -o pipefail; echo "$PROMPT" | claude --dangerously-skip-permissions --print 2>&1 | tee /dev/stderr) || CLAUDE_EXIT=$?
+
+  if [[ $CLAUDE_EXIT -ne 0 ]]; then
+    echo ""
+    echo "ralph stopped: claude exited with code $CLAUDE_EXIT — check spend cap, rate limits, or network connectivity"
+    exit $CLAUDE_EXIT
+  fi
 
   if echo "$OUTPUT" | grep -q "<promise>COMPLETE</promise>"; then
     echo ""
