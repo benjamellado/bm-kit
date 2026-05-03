@@ -34,7 +34,25 @@ List them with their titles so the user knows what's about to run.
 
 If no `ready-for-agent` issues exist, tell the user and suggest running `/bm-kit:triage` first.
 
+## Ask for iteration limit
+
+After listing issues, count them (call the count X) and ask:
+
+> Run all X issues, or enter a limit [all]:
+
+Wait for the user's response before proceeding:
+- If the user enters a positive integer N, record `--max N` to pass to the script.
+- If the user presses enter (empty response) or types "all", run without `--max` (default behaviour).
+
 ## Running the loop
+
+If the user provided a limit N:
+
+```bash
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/ralph.sh <feature-slug> --max N
+```
+
+Otherwise:
 
 ```bash
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/ralph.sh <feature-slug>
