@@ -1,7 +1,7 @@
 ---
 id: BM-05
 title: Ralph skill
-status: ready-for-agent
+status: done
 category: enhancement
 priority: 5
 ---
