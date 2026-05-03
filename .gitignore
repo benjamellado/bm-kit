@@ -12,5 +12,9 @@ progress.txt
 # OS files
 .DS_Store
 
+# Environment secrets
+.env
+.env.*
+
 #Claude
 .claude/
