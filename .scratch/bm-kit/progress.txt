@@ -26,3 +26,13 @@
   - `allowed-tools: Bash, Write` in frontmatter — init needs both to create dirs and write stubs
   - CONTEXT.md and progress.txt stubs are included inline in the skill prompt so Claude writes consistent content without guessing
 ---
+
+## 2026-05-03 - BM-04
+- Rewrote `scripts/ralph.sh`: accepts `<feature-name>` as first arg, optional `--tool claude` (default), reads `ready-for-agent` issues from `.scratch/<feature>/issues/` in filename order, prepends feature context to CLAUDE.md before piping to claude, exits cleanly when no ready-for-agent issues remain
+- Rewrote `CLAUDE.md`: removed all `prd.json` references, updated task steps to read from the passed issue file, update `status: done` in frontmatter, append to both feature and global progress logs
+- Files changed: `scripts/ralph.sh`, `CLAUDE.md`
+- **Learnings for future iterations:**
+  - Script prepends a `## Current Task` block (feature name, issue file path, progress log paths) before CLAUDE.md content — this is how the agent knows which issue to work on without the script having to parse or transform the issue
+  - `while IFS= read -r f; do ... done < <(find ... | sort)` is the correct bash pattern for sorted iteration — avoids subshell variable scoping issues
+  - `prd.json`, archive logic, and `.last-branch` file are all removed — no backwards compatibility needed
+---
