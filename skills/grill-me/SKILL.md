@@ -44,6 +44,23 @@ Only do this if the user picked a Backlog item in the opening. If they started f
 
 ---
 
+## During the session — adjacency detection
+
+The open Backlog item titles collected in the session opening are ambient context for the entire session. Do not print them again — they are silent.
+
+While grilling, if the discussion topic clearly overlaps with one of those titles, surface it inline without halting the session:
+
+> This looks adjacent to "[Backlog item title]" in your Backlog — want to fold it in or keep them separate?
+
+At that moment, read the full body of that specific item (using Read) to inform follow-up questions if the user wants to fold it in.
+
+Rules:
+- Only surface an item when the overlap is clear, not speculative.
+- Do not pre-load full bodies of all open items — load one on demand, only when adjacency is detected.
+- If `.scratch/backlog/` was absent or empty at session start, skip this step entirely.
+
+---
+
 ## Grilling
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
