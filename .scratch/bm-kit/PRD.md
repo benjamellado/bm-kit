@@ -1,5 +1,5 @@
 ---
-status: needs-triage
+status: done
 type: prd
 ---
 
