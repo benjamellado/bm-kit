@@ -18,15 +18,18 @@ In any project directory:
 
 This creates `.scratch/`, `CONTEXT.md`, and `docs/adr/` in the current project.
 
+Optionally, run `/bm-kit:understand` to pre-fill `CONTEXT.md` with extracted and confirmed knowledge about the codebase.
+
 ## Workflow
 
 ```
-init → grill-me → grill-with-docs → to-prd → to-issues → triage → ralph
+init → [understand] → grill-me → grill-with-docs → to-prd → to-issues → triage → ralph
 ```
 
 | Skill | Command | What it does |
 |-------|---------|--------------|
 | Init | `/bm-kit:init` | Bootstrap a project with `.scratch/`, `CONTEXT.md`, `docs/adr/` |
+| Understand | `/bm-kit:understand` | Pre-fill CONTEXT.md with a first-pass understanding of the codebase |
 | Grill me | `/bm-kit:grill-me` | Stress-test a feature idea through relentless questioning |
 | Grill with docs | `/bm-kit:grill-with-docs` | Lock down terminology, update `CONTEXT.md` and ADRs |
 | To PRD | `/bm-kit:to-prd` | Synthesize the conversation into a PRD at `.scratch/<feature>/PRD.md` |
