@@ -1,34 +1,38 @@
 ---
 name: to-issues
-description: Break a plan, spec, or PRD into independently-grabbable issues on the project issue tracker using tracer-bullet vertical slices. Use when user wants to convert a plan into issues, create implementation tickets, or break down work into issues.
+description: Break a plan, spec, or PRD into independently-grabbable issues in .scratch/<feature-slug>/issues/ using tracer-bullet vertical slices. Use when user wants to convert a plan into issues, create implementation tickets, or break down work into issues.
+allowed-tools: Bash, Read, Write
 ---
 
-# To Issues
+Read `${CLAUDE_PLUGIN_ROOT}/context/workflow.md` to understand the full bm-kit pipeline and where this skill fits.
 
-Break a plan into independently-grabbable issues using vertical slices (tracer bullets).
-
-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+Break a plan into independently-grabbable issues using vertical slices (tracer bullets). Issues are written to `.scratch/<feature-slug>/issues/` — no GitHub API calls.
 
 ## Process
 
 ### 1. Gather context
 
-Work from whatever is already in the conversation context. If the user passes an issue reference (issue number, URL, or path) as an argument, fetch it from the issue tracker and read its full body and comments.
+Work from whatever is already in the conversation context. If the user passes a path to a PRD or issue file, read it. If a `.scratch/<feature-slug>/PRD.md` exists, read it for scope and user stories.
+
+Determine the **feature slug** from context or the PRD filename. If unclear, ask.
+
+Determine the **feature ID prefix** (e.g. `BM` for bm-kit). Derive it from the feature slug or ask the user.
 
 ### 2. Explore the codebase (optional)
 
-If you have not already explored the codebase, do so to understand the current state of the code. Issue titles and descriptions should use the project's domain glossary vocabulary, and respect ADRs in the area you're touching.
+If not already done, explore the codebase to understand the current state. Issue titles should use the project's domain glossary vocabulary (`CONTEXT.md` if present) and respect ADRs in `docs/adr/`.
 
 ### 3. Draft vertical slices
 
-Break the plan into **tracer bullet** issues. Each issue is a thin vertical slice that cuts through ALL integration layers end-to-end, NOT a horizontal slice of one layer.
+Break the plan into **tracer bullet** issues. Each issue is a thin vertical slice that cuts through ALL relevant layers end-to-end, NOT a horizontal slice of one layer.
 
-Slices may be 'HITL' or 'AFK'. HITL slices require human interaction, such as an architectural decision or a design review. AFK slices can be implemented and merged without human interaction. Prefer AFK over HITL where possible.
+Slices may be **AFK** (autonomous — safe for the ralph loop to implement) or **HITL** (human-in-the-loop — requires a decision or access the agent can't have). Prefer AFK.
 
 <vertical-slice-rules>
-- Each slice delivers a narrow but COMPLETE path through every layer (schema, API, UI, tests)
-- A completed slice is demoable or verifiable on its own
+- Each slice delivers a narrow but COMPLETE path through every relevant layer
+- A completed slice is independently verifiable
 - Prefer many thin slices over few thick ones
+- Filename order encodes dependency order — blockers get lower numbers
 </vertical-slice-rules>
 
 ### 4. Quiz the user
@@ -36,46 +40,64 @@ Slices may be 'HITL' or 'AFK'. HITL slices require human interaction, such as an
 Present the proposed breakdown as a numbered list. For each slice, show:
 
 - **Title**: short descriptive name
-- **Type**: HITL / AFK
+- **Type**: AFK / HITL
 - **Blocked by**: which other slices (if any) must complete first
 - **User stories covered**: which user stories this addresses (if the source material has them)
 
 Ask the user:
-
-- Does the granularity feel right? (too coarse / too fine)
+- Does the granularity feel right?
 - Are the dependency relationships correct?
-- Should any slices be merged or split further?
-- Are the correct slices marked as HITL and AFK?
+- Should any slices be merged or split?
+- Are the HITL/AFK labels right?
 
-Iterate until the user approves the breakdown.
+Iterate until the user approves.
 
-### 5. Publish the issues to the issue tracker
+### 5. Write the issue files
 
-For each approved slice, publish a new issue to the issue tracker. Use the issue body template below. Apply the `needs-triage` triage label so each issue enters the normal triage flow.
+For each approved slice, write a file to `.scratch/<feature-slug>/issues/NN-slug.md`.
 
-Publish issues in dependency order (blockers first) so you can reference real issue identifiers in the "Blocked by" field.
+- Create the directory if needed: `mkdir -p .scratch/<feature-slug>/issues`
+- `NN` is zero-padded, starting at `01`, in dependency order (blockers get lower numbers)
+- `slug` is a short kebab-case descriptor of the slice
+
+Each file uses the issue template below. Set `status: needs-triage` in frontmatter.
+
+Write issues in dependency order (blockers first) so you can reference real IDs in "Blocked by".
 
 <issue-template>
+```markdown
+---
+id: <PREFIX-NN>
+title: <short title>
+status: needs-triage
+priority: <NN>
+---
+
 ## Parent
 
-A reference to the parent issue on the issue tracker (if the source was an existing issue, otherwise omit this section).
+`.scratch/<feature-slug>/PRD.md`
 
 ## What to build
 
-A concise description of this vertical slice. Describe the end-to-end behavior, not layer-by-layer implementation.
+<Concise description of this vertical slice — end-to-end behavior, not layer-by-layer implementation.>
 
 ## Acceptance criteria
 
 - [ ] Criterion 1
 - [ ] Criterion 2
-- [ ] Criterion 3
 
 ## Blocked by
 
-- A reference to the blocking ticket (if any)
+- <ID of blocking issue> or "None"
 
-Or "None - can start immediately" if no blockers.
+## Comments
 
+> *This was generated by /bm-kit:to-issues.*
+```
 </issue-template>
 
-Do NOT close or modify any parent issue.
+Do NOT modify the PRD file.
+
+### 6. End with
+
+> Issues created in `.scratch/<feature-slug>/issues/`. Run `/bm-kit:triage` to move them to `ready-for-agent`.

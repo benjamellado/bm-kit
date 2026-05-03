@@ -1,7 +1,7 @@
 ---
 id: BM-07
 title: to-issues skill rewrite
-status: ready-for-agent
+status: done
 category: enhancement
 priority: 7
 ---
