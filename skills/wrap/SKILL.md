@@ -131,6 +131,22 @@ Include the raw output verbatim, formatted as a code block.
 
 ---
 
+### Push branch if needed
+
+Before creating the PR, check whether the current branch has a remote tracking branch:
+
+```bash
+git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null
+```
+
+If this command fails (exit code non-zero), the branch has no upstream — push it first:
+
+```bash
+git push -u origin <current-branch>
+```
+
+If it succeeds, the branch is already on the remote — skip the push.
+
 ### Run gh pr create
 
 Use a HEREDOC to pass the body:
