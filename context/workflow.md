@@ -5,7 +5,7 @@ bm-kit is a Claude Code plugin that unifies the full AI-assisted development wor
 ## Pipeline
 
 ```
-install → init → [understand] → grill-me → grill-with-docs → to-prd → to-issues → triage → ralph → wrap
+install → init → [understand] → [proto →] grill-me → grill-with-docs → to-prd → to-issues → triage → ralph → wrap
 ```
 
 Each step hands off to the next. No translation between formats — every skill reads and writes `.scratch/`.
@@ -31,6 +31,16 @@ Each step hands off to the next. No translation between formats — every skill 
 **Produces:** A populated `CONTEXT.md` with auto-extracted content for each canonical section.
 
 **Next step:** Run `/bm-kit:grill-me` to stress-test a feature idea.
+
+---
+
+### `/bm-kit:proto`
+
+**Purpose:** Run a pre-alignment prototype loop — grill on what a feature does (not how to build it), generate a self-contained HTML prototype, then assess readiness. Use before grilling to validate an idea visually with stakeholders.
+
+**Produces:** `.scratch/<feature-slug>/prototype/brief.md` and versioned HTML prototypes (`001-*.html`, `002-*.html`…).
+
+**Next step:** Hand off `brief.md` + latest HTML to `/bm-kit:grill-me` to deepen the plan.
 
 ---
 
