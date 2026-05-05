@@ -85,7 +85,7 @@ The output is a repo that the agent can navigate with context: terms are defined
 Use this once you are ready to work on a concrete change — whether it starts from a Backlog item or a fresh idea.
 
 ```
-grill-me → to-prd → to-issues → triage → ralph
+grill-me → to-prd → to-issues → triage → ralph → wrap
 ```
 
 - `/bm-kit:grill-me` stress-tests the feature idea until the plan is clear. Opens by surfacing any open Backlog items so you can pick one up or start fresh.
@@ -93,6 +93,7 @@ grill-me → to-prd → to-issues → triage → ralph
 - `/bm-kit:to-issues` breaks the PRD into thin, dependency-ordered implementation slices.
 - `/bm-kit:triage` decides which issues are ready for the agent, need more information, need a human, or should not be done.
 - `/bm-kit:ralph <feature>` runs the implementation loop: pick the next ready issue, implement it, test it, commit it, mark it done, and repeat.
+- `/bm-kit:wrap <feature>` closes the loop — runs gap analysis against the PRD and issues, then opens a GitHub PR with a synthesized description.
 
 `/bm-kit:grill-with-docs` can still be used during feature work when the discussion exposes new domain language or a durable architectural decision.
 
@@ -122,6 +123,7 @@ grill-me → to-prd → to-issues → triage → ralph
 | To issues | `/bm-kit:to-issues` | Break a PRD into vertically-sliced issues at `.scratch/<feature>/issues/` |
 | Triage | `/bm-kit:triage` | Set issue status: `ready-for-agent`, `needs-info`, `wontfix`, etc. |
 | Ralph | `/bm-kit:ralph <feature>` | Run the implementation loop — pick, implement, commit, repeat |
+| Wrap | `/bm-kit:wrap <feature>` | Run gap analysis and open a GitHub PR — the final step after ralph |
 
 ### Utility skills
 

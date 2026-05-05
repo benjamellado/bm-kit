@@ -5,7 +5,7 @@ bm-kit is a Claude Code plugin that unifies the full AI-assisted development wor
 ## Pipeline
 
 ```
-install → init → [understand] → grill-me → grill-with-docs → to-prd → to-issues → triage → ralph
+install → init → [understand] → grill-me → grill-with-docs → to-prd → to-issues → triage → ralph → wrap
 ```
 
 Each step hands off to the next. No translation between formats — every skill reads and writes `.scratch/`.
@@ -95,6 +95,18 @@ Each step hands off to the next. No translation between formats — every skill 
 - Cross-cutting patterns appended to `progress.txt` at project root
 
 **Stop condition:** `<promise>COMPLETE</promise>` in agent output, or no remaining `ready-for-agent` issues.
+
+**Next step:** Run `/bm-kit:wrap <feature-slug>` to validate and ship the feature.
+
+---
+
+### `/bm-kit:wrap`
+
+**Purpose:** Close out a feature after the ralph loop. Runs a pre-flight gap analysis (PRD goals vs issues vs progress entries), presents a structured report, then opens a GitHub PR with a synthesized description.
+
+**Produces:** A GitHub PR with four sections: what was built, how to test it, known limitations, and the commit log.
+
+**Next step:** Review the PR and merge.
 
 ---
 
