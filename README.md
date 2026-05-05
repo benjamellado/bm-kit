@@ -118,6 +118,7 @@ grill-me → to-prd → to-issues → triage → ralph → wrap
 
 | Skill | Command | What it does |
 |-------|---------|--------------|
+| Proto | `/bm-kit:proto` | Generate a self-contained HTML prototype before writing code — grill on what, not how |
 | Grill me | `/bm-kit:grill-me` | Stress-test a feature idea through relentless questioning |
 | To PRD | `/bm-kit:to-prd` | Synthesize the conversation into a PRD at `.scratch/<feature>/PRD.md` |
 | To issues | `/bm-kit:to-issues` | Break a PRD into vertically-sliced issues at `.scratch/<feature>/issues/` |
