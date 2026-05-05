@@ -56,6 +56,18 @@ _Avoid_: overlap, match, similarity, conflict
 `open` → `picked-up` (item has entered the workflow, linked to `.scratch/<feature-slug>/`) → `done` (work complete).
 _Avoid_: promoted, active, in-progress, started
 
+**Wrap**:
+The skill `/bm-kit:wrap` that closes out a feature by running pre-flight and opening a PR.
+_Avoid_: ship, close, finish, deploy
+
+**Pre-flight**:
+The phase in `/bm-kit:wrap` before PR creation: reads PRD, issues, and progress.txt, runs gap analysis, presents the report, then asks "create PR?".
+_Avoid_: preflight check, pre-check, validation
+
+**Gap analysis**:
+The cross-reference step inside pre-flight: compares PRD goals vs issues, issues vs progress entries, and issue statuses to surface uncovered or incomplete work.
+_Avoid_: coverage check, diff, audit
+
 ## Relationships
 
 - A **Feature** contains one or more **Issues**
